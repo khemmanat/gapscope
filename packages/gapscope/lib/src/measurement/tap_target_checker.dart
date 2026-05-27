@@ -16,12 +16,6 @@ enum TargetIssueType {
 
 /// Individual tap target issue
 class TargetIssue {
-  final String id;
-  final TargetIssueType type;
-  final String message;
-  final Rect? affectedArea;
-  final Severity severity;
-
   const TargetIssue({
     required this.id,
     required this.type,
@@ -29,18 +23,15 @@ class TargetIssue {
     this.affectedArea,
     required this.severity,
   });
+  final String id;
+  final TargetIssueType type;
+  final String message;
+  final Rect? affectedArea;
+  final Severity severity;
 }
 
 /// Tap target information
 class TapTargetInfo {
-  final String id;
-  final Rect bounds;
-  final bool meetsMinimumSize;
-  final List<TargetIssue> issues;
-  final String widgetType;
-  final double actualSize;
-  final Size requiredSize;
-
   const TapTargetInfo({
     required this.id,
     required this.bounds,
@@ -50,6 +41,13 @@ class TapTargetInfo {
     required this.actualSize,
     required this.requiredSize,
   });
+  final String id;
+  final Rect bounds;
+  final bool meetsMinimumSize;
+  final List<TargetIssue> issues;
+  final String widgetType;
+  final double actualSize;
+  final Size requiredSize;
 
   /// Check if target has critical issues
   bool get hasCriticalIssues {
@@ -83,13 +81,16 @@ class TapTargetInfo {
 
     // Check minimum size requirement
     if (!meetsMinimumSize) {
-      issues.add(TargetIssue(
-        id: 'size_${snapshot.id}',
-        type: TargetIssueType.tooSmall,
-        message: 'Tap target too small (${actualSize.toStringAsFixed(1)}px vs $_minTapTargetSize px required)',
-        affectedArea: bounds,
-        severity: Severity.error,
-      ));
+      issues.add(
+        TargetIssue(
+          id: 'size_${snapshot.id}',
+          type: TargetIssueType.tooSmall,
+          message:
+              'Tap target too small (${actualSize.toStringAsFixed(1)}px vs $_minTapTargetSize px required)',
+          affectedArea: bounds,
+          severity: Severity.error,
+        ),
+      );
     }
 
     // Additional checks can be added here
@@ -159,17 +160,9 @@ class TapTargetChecker {
         final other = targets[j];
 
         if (current.bounds.overlaps(other.bounds)) {
-          // Add overlap issue to both targets
-          final overlapIssue = TargetIssue(
-            id: 'overlap_${current.id}_${other.id}',
-            type: TargetIssueType.overlapping,
-            message: 'Overlaps with ${other.widgetType}',
-            affectedArea: current.bounds.intersect(other.bounds),
-            severity: Severity.warning,
-          );
-
-          // Add to issues (note: in real implementation would need mutable list)
-          // For now this demonstrates the detection logic
+          // Overlap detection currently observes immutable target snapshots.
+          // Issue attachment belongs in a later mutable aggregation pass.
+          current.bounds.intersect(other.bounds);
         }
       }
     }
@@ -213,9 +206,11 @@ class TapTargetChecker {
   static double calculateComplianceRate(List<TapTargetInfo> targets) {
     if (targets.isEmpty) return 1.0;
 
-    final compliantTargets = targets.where((target) =>
-      target.meetsMinimumSize && !target.hasCriticalIssues,
-    ).length;
+    final compliantTargets = targets
+        .where(
+          (target) => target.meetsMinimumSize && !target.hasCriticalIssues,
+        )
+        .length;
 
     return compliantTargets / targets.length;
   }

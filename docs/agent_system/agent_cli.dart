@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'agent_init_command.dart';
 import 'document_reader_agent.dart';
-import 'dart:io';
 
 void main(List<String> arguments) async {
   // For all commands, ensure documents are loaded first

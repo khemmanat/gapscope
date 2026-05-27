@@ -12,13 +12,6 @@ enum WhitespaceType {
 
 /// Detected whitespace region in UI
 class WhitespaceRegion {
-  final String id;
-  final Rect bounds;
-  final WhitespaceType type;
-  final double area;
-  final String? source;
-  final String? parentId;
-
   const WhitespaceRegion({
     required this.id,
     required this.bounds,
@@ -27,19 +20,6 @@ class WhitespaceRegion {
     this.source,
     this.parentId,
   });
-
-  /// Check if whitespace is excessive (> 25% of parent area)
-  bool isExcessive(double parentArea) {
-    return area > (parentArea * 0.25);
-  }
-
-  /// Get whitespace center point
-  Offset get center => bounds.center;
-
-  /// Check if point is within this whitespace region
-  bool contains(Offset point) {
-    return bounds.contains(point);
-  }
 
   /// Create whitespace region from bounds and type
   factory WhitespaceRegion.fromBounds(
@@ -55,6 +35,25 @@ class WhitespaceRegion {
       source: source,
     );
   }
+  final String id;
+  final Rect bounds;
+  final WhitespaceType type;
+  final double area;
+  final String? source;
+  final String? parentId;
+
+  /// Check if whitespace is excessive (> 25% of parent area)
+  bool isExcessive(double parentArea) {
+    return area > (parentArea * 0.25);
+  }
+
+  /// Get whitespace center point
+  Offset get center => bounds.center;
+
+  /// Check if point is within this whitespace region
+  bool contains(Offset point) {
+    return bounds.contains(point);
+  }
 
   /// Calculate area ratio relative to parent
   double areaRatio(double parentArea) {
@@ -65,35 +64,12 @@ class WhitespaceRegion {
 
 /// Whitespace detection result
 class WhitespaceAnalysis {
-  final List<WhitespaceRegion> regions;
-  final double totalWhitespace;
-  final double totalArea;
-  final Map<WhitespaceType, double> typeDistribution;
-
   const WhitespaceAnalysis({
     required this.regions,
     required this.totalWhitespace,
     required this.totalArea,
     required this.typeDistribution,
   });
-
-  /// Get whitespace percentage
-  double get whitespacePercentage {
-    if (totalArea <= 0) return 0.0;
-    return (totalWhitespace / totalArea) * 100;
-  }
-
-  /// Get regions by type
-  List<WhitespaceRegion> getRegionsByType(WhitespaceType type) {
-    return regions.where((region) => region.type == type).toList();
-  }
-
-  /// Get excessive whitespace regions
-  List<WhitespaceRegion> getExcessiveRegions() {
-    return regions.where((region) =>
-      region.isExcessive(totalArea / regions.length),
-    ).toList();
-  }
 
   /// Create analysis from detected regions
   factory WhitespaceAnalysis.fromRegions(
@@ -108,7 +84,7 @@ class WhitespaceAnalysis {
     final distribution = <WhitespaceType, double>{};
     for (final region in detectedRegions) {
       distribution[region.type] =
-        (distribution[region.type] ?? 0.0) + region.area;
+          (distribution[region.type] ?? 0.0) + region.area;
     }
 
     return WhitespaceAnalysis(
@@ -117,6 +93,30 @@ class WhitespaceAnalysis {
       totalArea: totalAnalysisArea,
       typeDistribution: distribution,
     );
+  }
+  final List<WhitespaceRegion> regions;
+  final double totalWhitespace;
+  final double totalArea;
+  final Map<WhitespaceType, double> typeDistribution;
+
+  /// Get whitespace percentage
+  double get whitespacePercentage {
+    if (totalArea <= 0) return 0.0;
+    return (totalWhitespace / totalArea) * 100;
+  }
+
+  /// Get regions by type
+  List<WhitespaceRegion> getRegionsByType(WhitespaceType type) {
+    return regions.where((region) => region.type == type).toList();
+  }
+
+  /// Get excessive whitespace regions
+  List<WhitespaceRegion> getExcessiveRegions() {
+    return regions
+        .where(
+          (region) => region.isExcessive(totalArea / regions.length),
+        )
+        .toList();
   }
 }
 
@@ -195,8 +195,8 @@ class WhitespaceDetector {
           return Rect.fromLTWH(
             current.bounds.right,
             verticalOverlap > 0
-              ? math.max(current.bounds.top, next.bounds.top)
-              : current.bounds.top,
+                ? math.max(current.bounds.top, next.bounds.top)
+                : current.bounds.top,
             gapWidth,
             verticalOverlap > 0 ? verticalOverlap : minWhitespaceDimension,
           );
@@ -212,8 +212,8 @@ class WhitespaceDetector {
         if (horizontalOverlap > minWhitespaceDimension) {
           return Rect.fromLTWH(
             horizontalOverlap > 0
-              ? math.max(current.bounds.left, next.bounds.left)
-              : current.bounds.left,
+                ? math.max(current.bounds.left, next.bounds.left)
+                : current.bounds.left,
             current.bounds.bottom,
             horizontalOverlap > 0 ? horizontalOverlap : minWhitespaceDimension,
             gapHeight,
@@ -256,20 +256,25 @@ class WhitespaceDetector {
 
       // Check for internal padding in containers
       if (_isContainerWidget(snapshot.widgetType)) {
-        final children = snapshots.where((child) =>
-          child.visible &&
-          snapshot.bounds.contains(child.bounds.center) &&
-          child.id != snapshot.id,
-        ).toList();
+        final children = snapshots
+            .where(
+              (child) =>
+                  child.visible &&
+                  snapshot.bounds.contains(child.bounds.center) &&
+                  child.id != snapshot.id,
+            )
+            .toList();
 
         if (children.isNotEmpty) {
           final paddingBounds = _calculatePaddingBounds(snapshot, children);
           if (paddingBounds != null) {
-            paddingRegions.add(WhitespaceRegion.fromBounds(
-              paddingBounds,
-              WhitespaceType.padding,
-              'Padding in ${snapshot.widgetType}',
-            ));
+            paddingRegions.add(
+              WhitespaceRegion.fromBounds(
+                paddingBounds,
+                WhitespaceType.padding,
+                'Padding in ${snapshot.widgetType}',
+              ),
+            );
           }
         }
       }
@@ -332,6 +337,24 @@ class WhitespaceDetector {
       );
     }
 
+    if (bottomPadding > minWhitespaceDimension) {
+      return Rect.fromLTWH(
+        container.bounds.left,
+        maxY,
+        container.bounds.width,
+        bottomPadding,
+      );
+    }
+
+    if (rightPadding > minWhitespaceDimension) {
+      return Rect.fromLTWH(
+        maxX,
+        container.bounds.top,
+        rightPadding,
+        container.bounds.height,
+      );
+    }
+
     return null;
   }
 
@@ -362,11 +385,14 @@ class WhitespaceDetector {
     List<GeometrySnapshot> allSnapshots,
   ) {
     // Check for empty space around widget
-    final surroundingWidgets = allSnapshots.where((other) =>
-      other.visible &&
-      other.id != widget.id &&
-      widget.bounds.inflate(20).overlaps(other.bounds),
-    ).toList();
+    final surroundingWidgets = allSnapshots
+        .where(
+          (other) =>
+              other.visible &&
+              other.id != widget.id &&
+              widget.bounds.inflate(20).overlaps(other.bounds),
+        )
+        .toList();
 
     if (surroundingWidgets.isEmpty) {
       // Widget is isolated, potential margin region

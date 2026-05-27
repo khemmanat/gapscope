@@ -6,11 +6,11 @@ import '../capture/geometry_snapshot.dart';
 /// Provides high-performance spatial analysis and distance calculations
 /// while maintaining strict performance constraints.
 class MeasurementEngine {
-  final List<GeometrySnapshot> snapshots;
-  final Map<String, GeometrySnapshot> _snapshotMap;
 
   MeasurementEngine({this.snapshots = const []})
       : _snapshotMap = {for (var s in snapshots) s.id: s};
+  final List<GeometrySnapshot> snapshots;
+  final Map<String, GeometrySnapshot> _snapshotMap;
 
   /// Get snapshot by ID
   GeometrySnapshot? getSnapshot(String id) => _snapshotMap[id];
@@ -162,11 +162,11 @@ class MeasurementEngine {
     final siblings = snapshots.where((s) =>
       s.parentId == snapshot.parentId &&
       s.id != snapshot.id &&
-      s.visible
+      s.visible,
     );
 
     return siblings.map((sibling) =>
-      calculateDistance(snapshot, sibling)
+      calculateDistance(snapshot, sibling),
     ).toList();
   }
 
@@ -186,11 +186,6 @@ class MeasurementEngine {
 
 /// Distance measurement between two widgets
 class SpacingDistance {
-  final Offset from;
-  final Offset to;
-  final double pixels;
-  final SpacingType type;
-  final SpacingOrientation orientation;
 
   const SpacingDistance({
     required this.from,
@@ -207,6 +202,11 @@ class SpacingDistance {
         pixels = 0,
         type = SpacingType.invisible,
         orientation = SpacingOrientation.none;
+  final Offset from;
+  final Offset to;
+  final double pixels;
+  final SpacingType type;
+  final SpacingOrientation orientation;
 
   /// Check if this represents a meaningful spacing
   bool get isMeaningful => pixels > 0 && type != SpacingType.invisible;

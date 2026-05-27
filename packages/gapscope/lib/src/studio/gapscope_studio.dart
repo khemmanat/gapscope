@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
-import '../models/story_data.dart';
+
 import '../addons/gapscope_addon.dart';
+import '../models/story_data.dart';
 import '../ui/studio_shell.dart';
 import 'gapscope_catalog.dart';
 import 'gapscope_component.dart';
@@ -10,10 +11,6 @@ import 'gapscope_component.dart';
 /// The root widget for GapScope Studio that provides the foundation
 /// for component preview and addon management.
 class GapScopeStudio extends StatefulWidget {
-  final String title;
-  final List<GapScopeComponent> components;
-  final List<GapScopeAddon> addons;
-  final StoryData? initialStory;
 
   const GapScopeStudio({
     super.key,
@@ -22,6 +19,10 @@ class GapScopeStudio extends StatefulWidget {
     this.addons = const [],
     this.initialStory,
   });
+  final String title;
+  final List<GapScopeComponent> components;
+  final List<GapScopeAddon> addons;
+  final StoryData? initialStory;
 
   @override
   State<GapScopeStudio> createState() => _GapScopeStudioState();

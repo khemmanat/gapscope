@@ -4,6 +4,13 @@ import '../models/story_data.dart';
 ///
 /// Components group related stories together in the catalog.
 class GapScopeComponent {
+
+  const GapScopeComponent({
+    required this.id,
+    required this.name,
+    this.description,
+    this.stories = const [],
+  });
   /// Unique identifier for this component
   final String id;
 
@@ -15,13 +22,6 @@ class GapScopeComponent {
 
   /// Stories belonging to this component
   final List<StoryData> stories;
-
-  const GapScopeComponent({
-    required this.id,
-    required this.name,
-    this.description,
-    this.stories = const [],
-  });
 
   GapScopeComponent copyWith({
     String? id,

@@ -3,32 +3,6 @@ import 'overlay_type.dart';
 
 /// Immutable metadata about an overlay in the GapScope system
 class OverlayInfo {
-  /// Unique identifier for this overlay instance
-  final String id;
-
-  /// Type of overlay
-  final OverlayType type;
-
-  /// Route name if this is a navigational overlay
-  final String? routeName;
-
-  /// Current bounds of the overlay
-  final Rect bounds;
-
-  /// Whether the overlay is currently visible
-  final bool isVisible;
-
-  /// ID of parent overlay if nested
-  final String? parentOverlayId;
-
-  /// When this overlay was created
-  final DateTime createdAt;
-
-  /// Widget type of the overlay content
-  final String widgetType;
-
-  /// Depth level for nested overlays (0 = top level)
-  final int depth;
 
   /// Create overlay info with all required fields
   const OverlayInfo({
@@ -66,6 +40,32 @@ class OverlayInfo {
       depth: depth,
     );
   }
+  /// Unique identifier for this overlay instance
+  final String id;
+
+  /// Type of overlay
+  final OverlayType type;
+
+  /// Route name if this is a navigational overlay
+  final String? routeName;
+
+  /// Current bounds of the overlay
+  final Rect bounds;
+
+  /// Whether the overlay is currently visible
+  final bool isVisible;
+
+  /// ID of parent overlay if nested
+  final String? parentOverlayId;
+
+  /// When this overlay was created
+  final DateTime createdAt;
+
+  /// Widget type of the overlay content
+  final String widgetType;
+
+  /// Depth level for nested overlays (0 = top level)
+  final int depth;
 
   /// Check if this overlay contains another overlay info
   bool contains(OverlayInfo other) {

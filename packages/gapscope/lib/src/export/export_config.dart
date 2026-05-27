@@ -9,6 +9,15 @@ enum ScreenshotFormat {
 
 /// Export configuration for screenshots and reports
 class ExportConfig {
+
+  const ExportConfig({
+    this.format = ScreenshotFormat.png,
+    this.quality = 0.9,
+    this.includeInspector = true,
+    this.pixelRatio = 1.0,
+    this.customSize,
+    this.backgroundColor,
+  });
   /// Screenshot format
   final ScreenshotFormat format;
 
@@ -26,15 +35,6 @@ class ExportConfig {
 
   /// Background color for transparent areas
   final Color? backgroundColor;
-
-  const ExportConfig({
-    this.format = ScreenshotFormat.png,
-    this.quality = 0.9,
-    this.includeInspector = true,
-    this.pixelRatio = 1.0,
-    this.customSize,
-    this.backgroundColor,
-  });
 
   /// Get format string for file extension
   String get formatExtension {
@@ -92,6 +92,15 @@ class ExportConfig {
 
 /// Report export configuration
 class ReportConfig {
+
+  const ReportConfig({
+    this.format = ReportFormat.html,
+    this.includeScreenshots = true,
+    this.includeMetrics = true,
+    this.includeIssueDetails = true,
+    required this.title,
+    this.description,
+  });
   /// Report format
   final ReportFormat format;
 
@@ -109,15 +118,6 @@ class ReportConfig {
 
   /// Report description
   final String? description;
-
-  const ReportConfig({
-    this.format = ReportFormat.html,
-    this.includeScreenshots = true,
-    this.includeMetrics = true,
-    this.includeIssueDetails = true,
-    required this.title,
-    this.description,
-  });
 }
 
 /// Report format options

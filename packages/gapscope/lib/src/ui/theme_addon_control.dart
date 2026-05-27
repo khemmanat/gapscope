@@ -3,12 +3,12 @@ import '../addons/theme_addon.dart';
 
 /// Control widget for theme addon
 class ThemeAddonControl extends StatefulWidget {
-  final ThemeAddon addon;
 
   const ThemeAddonControl({
     super.key,
     required this.addon,
   });
+  final ThemeAddon addon;
 
   @override
   State<ThemeAddonControl> createState() => _ThemeAddonControlState();

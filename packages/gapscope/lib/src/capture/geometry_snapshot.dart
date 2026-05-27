@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/rendering.dart';
 
 /// Immutable snapshot of widget geometry for safe runtime inspection
@@ -6,6 +5,16 @@ import 'package:flutter/rendering.dart';
 /// Copies only essential data from render objects, avoiding direct references
 /// to ensure safety and performance.
 class GeometrySnapshot {
+
+  const GeometrySnapshot({
+    required this.id,
+    required this.bounds,
+    required this.widgetType,
+    required this.depth,
+    this.visible = true,
+    this.parentId,
+    this.childIds = const [],
+  });
   /// Unique identifier for this snapshot
   final String id;
 
@@ -26,16 +35,6 @@ class GeometrySnapshot {
 
   /// Child widget IDs
   final List<String> childIds;
-
-  const GeometrySnapshot({
-    required this.id,
-    required this.bounds,
-    required this.widgetType,
-    required this.depth,
-    this.visible = true,
-    this.parentId,
-    this.childIds = const [],
-  });
 
   /// Create snapshot from render object
   static GeometrySnapshot fromRenderObject(
@@ -59,10 +58,8 @@ class GeometrySnapshot {
     try {
       // Try to get semantic bounds if available
       if (renderObject is RenderSemanticsAnnotations) {
-        final semanticsBox = (renderObject as RenderSemanticsAnnotations).semanticBounds;
-        if (semanticsBox != null) {
-          return semanticsBox;
-        }
+        final semanticsBox = renderObject.semanticBounds;
+        return semanticsBox;
       }
 
       // Fall back to paint bounds
@@ -99,7 +96,7 @@ class GeometrySnapshot {
 
       // For render boxes, check if they have positive size
       if (renderObject is RenderBox) {
-        final box = renderObject as RenderBox;
+        final box = renderObject;
         final size = box.size;
         return size.width > 0 && size.height > 0;
       }

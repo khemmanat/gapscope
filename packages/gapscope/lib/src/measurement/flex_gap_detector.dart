@@ -17,11 +17,6 @@ enum GapType {
 
 /// Individual gap between widgets in flex layout
 class WidgetGap {
-  final Offset position;
-  final Size size;
-  final GapType type;
-  final double value;
-  final String? description;
 
   const WidgetGap({
     required this.position,
@@ -30,6 +25,11 @@ class WidgetGap {
     required this.value,
     this.description,
   });
+  final Offset position;
+  final Size size;
+  final GapType type;
+  final double value;
+  final String? description;
 
   /// Get gap bounds
   Rect get bounds => Rect.fromLTWH(
@@ -45,11 +45,6 @@ class WidgetGap {
 
 /// Flex layout issue or problem
 class FlexIssue {
-  final String id;
-  final FlexIssueType type;
-  final String message;
-  final Rect? location;
-  final Severity severity;
 
   const FlexIssue({
     required this.id,
@@ -58,6 +53,11 @@ class FlexIssue {
     this.location,
     required this.severity,
   });
+  final String id;
+  final FlexIssueType type;
+  final String message;
+  final Rect? location;
+  final Severity severity;
 }
 
 /// Flex issue types
@@ -78,12 +78,6 @@ enum Severity {
 
 /// Complete flex layout analysis
 class FlexGap {
-  final String id;
-  final FlexType flexType;
-  final List<WidgetGap> gaps;
-  final List<FlexIssue> issues;
-  final Rect bounds;
-  final String? parentId;
 
   const FlexGap({
     required this.id,
@@ -93,6 +87,12 @@ class FlexGap {
     required this.bounds,
     this.parentId,
   });
+  final String id;
+  final FlexType flexType;
+  final List<WidgetGap> gaps;
+  final List<FlexIssue> issues;
+  final Rect bounds;
+  final String? parentId;
 
   /// Get total gap space
   double get totalGapSpace {
@@ -139,7 +139,7 @@ class FlexGap {
     final issues = _detectIssues(children, gaps, flexType);
 
     return FlexGap(
-      id: 'flex_${parentId}',
+      id: 'flex_$parentId',
       flexType: flexType,
       gaps: gaps,
       issues: issues,
@@ -231,14 +231,14 @@ class FlexGap {
       final uniqueValues = gapValues.toSet();
 
       if (uniqueValues.length > 1) {
-        final variance = (_calculateVariance(gapValues));
+        final variance = _calculateVariance(gapValues);
         if (variance > 4.0) {
           issues.add(FlexIssue(
             id: 'inconsistent_spacing',
             type: FlexIssueType.inconsistentSpacing,
             message: 'Inconsistent spacing detected (${variance.toStringAsFixed(1)}px variance)',
             severity: Severity.warning,
-          ));
+          ),);
         }
       }
     }
@@ -252,7 +252,7 @@ class FlexGap {
           message: 'Overflow detected in ${child.widgetType}',
           location: child.bounds,
           severity: Severity.error,
-        ));
+        ),);
       }
     }
 

@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'overlay_registry.dart';
+import 'package:flutter/material.dart';
+
 import 'overlay_info.dart';
+import 'overlay_registry.dart';
 import 'overlay_type.dart';
 
 /// Route observer for tracking navigation-based overlays

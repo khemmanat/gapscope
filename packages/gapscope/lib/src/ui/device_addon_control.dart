@@ -3,12 +3,12 @@ import '../addons/device_addon.dart';
 
 /// Control widget for device addon
 class DeviceAddonControl extends StatefulWidget {
-  final DeviceAddon addon;
 
   const DeviceAddonControl({
     super.key,
     required this.addon,
   });
+  final DeviceAddon addon;
 
   @override
   State<DeviceAddonControl> createState() => _DeviceAddonControlState();

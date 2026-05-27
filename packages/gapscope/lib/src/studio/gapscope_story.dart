@@ -5,6 +5,14 @@ import '../models/story_data.dart';
 ///
 /// Stories are individual previews of components with specific configurations.
 class GapScopeStory {
+
+  const GapScopeStory({
+    required this.id,
+    required this.name,
+    this.description,
+    required this.builder,
+    this.category,
+  });
   /// Unique identifier for this story
   final String id;
 
@@ -19,14 +27,6 @@ class GapScopeStory {
 
   /// Optional category for grouping
   final String? category;
-
-  const GapScopeStory({
-    required this.id,
-    required this.name,
-    this.description,
-    required this.builder,
-    this.category,
-  });
 
   /// Convert to StoryData model
   StoryData toStoryData() {

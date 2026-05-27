@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
+
 import '../capture/geometry_snapshot.dart';
-import '../measurement/measurement_engine.dart';
 import '../inspector/gapscope_controller.dart';
+import '../measurement/measurement_engine.dart';
 import 'bounds_painter.dart';
 import 'gap_painter.dart';
 import 'overlay_painter.dart';
@@ -10,13 +11,7 @@ import 'overlay_painter.dart';
 ///
 /// Coordinates all visualization layers and provides efficient
 /// rendering of bounds, spacing, and measurements.
-class InspectorPainter extends CustomPainter {
-  final List<GeometrySnapshot> snapshots;
-  final GeometrySnapshot? selectedSnapshot;
-  final GapScopeMode mode;
-  final MeasurementEngine? measurementEngine;
-  final List<dynamic> overlays; // OverlayInfo list (dynamic to avoid circular import)
-  final dynamic selectedOverlay; // Selected OverlayInfo (dynamic to avoid circular import)
+class InspectorPainter extends CustomPainter { // Selected OverlayInfo (dynamic to avoid circular import)
 
   const InspectorPainter({
     this.snapshots = const [],
@@ -26,6 +21,12 @@ class InspectorPainter extends CustomPainter {
     this.overlays = const [],
     this.selectedOverlay,
   });
+  final List<GeometrySnapshot> snapshots;
+  final GeometrySnapshot? selectedSnapshot;
+  final GapScopeMode mode;
+  final MeasurementEngine? measurementEngine;
+  final List<dynamic> overlays; // OverlayInfo list (dynamic to avoid circular import)
+  final dynamic selectedOverlay;
 
   @override
   void paint(Canvas canvas, Size size) {

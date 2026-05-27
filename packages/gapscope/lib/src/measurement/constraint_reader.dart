@@ -3,12 +3,6 @@ import '../capture/geometry_snapshot.dart';
 
 /// Constraint information for render objects
 class ConstraintInfo {
-  final String id;
-  final BoxConstraints constraints;
-  final Size actualSize;
-  final bool isTight;
-  final bool isBounded;
-  final String widgetType;
 
   const ConstraintInfo({
     required this.id,
@@ -18,6 +12,12 @@ class ConstraintInfo {
     required this.isBounded,
     required this.widgetType,
   });
+  final String id;
+  final BoxConstraints constraints;
+  final Size actualSize;
+  final bool isTight;
+  final bool isBounded;
+  final String widgetType;
 
   /// Check if widget respects constraints
   bool get respectsConstraints {
@@ -113,8 +113,11 @@ class ConstraintReader {
     int violationCount = 0;
 
     for (final constraint in constraints) {
-      if (constraint.isTight) tightCount++;
-      else looseCount++;
+      if (constraint.isTight) {
+        tightCount++;
+      } else {
+        looseCount++;
+      }
 
       if (!constraint.isBounded) unboundedCount++;
       if (!constraint.respectsConstraints) violationCount++;

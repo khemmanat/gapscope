@@ -5,7 +5,8 @@ import 'package:gapscope/gapscope.dart';
 
 void main() {
   group('GapScope Studio Tests', () {
-    testWidgets('GapScopeStudio renders without errors', (WidgetTester tester) async {
+    testWidgets('GapScopeStudio renders without errors',
+        (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: GapScopeStudio(
@@ -24,7 +25,8 @@ void main() {
       expect(find.byType(GapScopeStudio), findsOneWidget);
     });
 
-    testWidgets('GapScopeStudio displays components in sidebar', (WidgetTester tester) async {
+    testWidgets('GapScopeStudio displays components in sidebar',
+        (WidgetTester tester) async {
       const component = GapScopeComponent(
         id: 'test_button',
         name: 'Test Button',
@@ -43,7 +45,8 @@ void main() {
       expect(find.text('Test Button'), findsOneWidget);
     });
 
-    testWidgets('GapScopeInspector toggles modes correctly', (WidgetTester tester) async {
+    testWidgets('GapScopeInspector toggles modes correctly',
+        (WidgetTester tester) async {
       final inspectorController = GapScopeController();
 
       await tester.pumpWidget(
@@ -59,7 +62,7 @@ void main() {
       expect(inspectorController.mode, GapScopeMode.off);
 
       // Test mode change
-      inspectorController.setMode(GapScopeMode.bounds);
+      inspectorController.mode = GapScopeMode.bounds;
       await tester.pump();
 
       expect(inspectorController.mode, GapScopeMode.bounds);
@@ -117,19 +120,19 @@ void main() {
         timestamp: DateTime.now(),
         screenshots: [],
         issues: [
-          QAIssue(
+          const QAIssue(
             id: 'issue1',
             severity: IssueSeverity.critical,
             category: 'Test',
             description: 'Critical issue',
           ),
-          QAIssue(
+          const QAIssue(
             id: 'issue2',
             severity: IssueSeverity.warning,
             category: 'Test',
             description: 'Warning issue',
           ),
-          QAIssue(
+          const QAIssue(
             id: 'issue3',
             severity: IssueSeverity.warning,
             category: 'Test',
@@ -167,9 +170,9 @@ void main() {
     });
 
     test('GeometrySnapshot creates valid snapshot', () {
-      final snapshot = GeometrySnapshot(
+      const snapshot = GeometrySnapshot(
         id: 'test_widget',
-        bounds: const Rect.fromLTWH(10, 10, 100, 50),
+        bounds: Rect.fromLTWH(10, 10, 100, 50),
         widgetType: 'Container',
         depth: 2,
         visible: true,

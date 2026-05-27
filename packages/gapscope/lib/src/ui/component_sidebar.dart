@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import '../models/story_data.dart';
 import '../studio/gapscope_catalog.dart';
+import '../studio/gapscope_component.dart';
 
 /// Sidebar for component and story navigation
 class ComponentSidebar extends StatelessWidget {
-  final GapScopeCatalog catalog;
-  final StoryData? selectedStory;
-  final ValueChanged<StoryData> onStorySelected;
-  final double width;
-
   const ComponentSidebar({
     super.key,
     required this.catalog,
@@ -16,6 +12,10 @@ class ComponentSidebar extends StatelessWidget {
     required this.onStorySelected,
     this.width = 300,
   });
+  final GapScopeCatalog catalog;
+  final StoryData? selectedStory;
+  final ValueChanged<StoryData> onStorySelected;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,10 @@ class ComponentSidebar extends StatelessWidget {
     }).toList();
   }
 
-  Widget _buildComponentExpansionTile(BuildContext context, component) {
+  Widget _buildComponentExpansionTile(
+    BuildContext context,
+    GapScopeComponent component,
+  ) {
     return ExpansionTile(
       title: Text(component.name),
       subtitle: component.description != null
@@ -111,7 +114,10 @@ class ComponentSidebar extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildStoryList(BuildContext context, component) {
+  List<Widget> _buildStoryList(
+    BuildContext context,
+    GapScopeComponent component,
+  ) {
     if (component.stories.isEmpty) {
       return [
         Padding(

@@ -1,10 +1,11 @@
 import 'package:flutter/widgets.dart';
-import '../capture/render_tree_capture.dart';
+
 import '../capture/geometry_snapshot.dart';
+import '../capture/render_tree_capture.dart';
 import '../measurement/measurement_engine.dart';
-import '../painting/inspector_painter.dart';
-import '../overlay/overlay_registry.dart';
 import '../overlay/overlay_info.dart';
+import '../overlay/overlay_registry.dart';
+import '../painting/inspector_painter.dart';
 import 'gapscope_controller.dart';
 
 /// Enhanced inspector widget for GapScope Studio (Phase 2 + Phase 3 overlay support)
@@ -12,16 +13,15 @@ import 'gapscope_controller.dart';
 /// Provides runtime widget inspection with bounds detection, spacing analysis,
 /// and overlay visualization.
 class GapScopeInspector extends StatefulWidget {
-  final bool enabled;
-  final GapScopeController? controller;
-  final Widget child;
-
   const GapScopeInspector({
     super.key,
     this.enabled = true,
     this.controller,
     required this.child,
   });
+  final bool enabled;
+  final GapScopeController? controller;
+  final Widget child;
 
   @override
   State<GapScopeInspector> createState() => _GapScopeInspectorState();
@@ -47,7 +47,7 @@ class _GapScopeInspectorState extends State<GapScopeInspector> {
     _measurementEngine = MeasurementEngine();
 
     if (!widget.enabled) {
-      _controller.setMode(GapScopeMode.off);
+      _controller.mode = GapScopeMode.off;
     }
 
     _controller.addListener(_onControllerChanged);
@@ -61,7 +61,7 @@ class _GapScopeInspectorState extends State<GapScopeInspector> {
     super.didUpdateWidget(oldWidget);
     if (widget.enabled != oldWidget.enabled) {
       if (!widget.enabled) {
-        _controller.setMode(GapScopeMode.off);
+        _controller.mode = GapScopeMode.off;
       }
     }
 
@@ -147,11 +147,13 @@ class _GapScopeInspectorState extends State<GapScopeInspector> {
 
   void _updateSnapshots() {
     try {
-      final renderObject = _capture.captureKey.currentContext?.findRenderObject();
+      final renderObject =
+          _capture.captureKey.currentContext?.findRenderObject();
       if (renderObject == null) return;
 
       _currentSnapshots = _capture.captureSubtree(renderObject);
-      _measurementEngine = _measurementEngine.updateSnapshots(_currentSnapshots);
+      _measurementEngine =
+          _measurementEngine.updateSnapshots(_currentSnapshots);
     } catch (e) {
       // Handle capture errors gracefully
       _currentSnapshots = [];

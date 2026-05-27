@@ -1,6 +1,8 @@
 import 'document_reader_agent.dart';
 
 class AIPromptProcessor {
+
+  AIPromptProcessor._internal() : _docReader = DocumentReaderAgent.instance;
   static AIPromptProcessor? _instance;
   final DocumentReaderAgent _docReader;
 
@@ -8,8 +10,6 @@ class AIPromptProcessor {
     _instance ??= AIPromptProcessor._internal();
     return _instance!;
   }
-
-  AIPromptProcessor._internal() : _docReader = DocumentReaderAgent.instance;
 
   Future<void> initialize() async {
     await _docReader.loadDocuments();

@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'overlay_type.dart';
+
 import 'gapscope_overlay_region.dart';
+import 'overlay_type.dart';
 
 /// Internal host widget for automatic overlay detection
 ///
 /// Provides parent tracking and lifecycle management for nested overlays.
 /// Used internally by GapScope overlay system for managing overlay hierarchies.
 class GapScopeOverlayHost extends StatelessWidget {
-  /// Child widget to host
-  final Widget child;
-
-  /// Optional parent overlay ID for nested overlays
-  final String? parentOverlayId;
 
   const GapScopeOverlayHost({
     super.key,
     required this.child,
     this.parentOverlayId,
   });
+  /// Child widget to host
+  final Widget child;
+
+  /// Optional parent overlay ID for nested overlays
+  final String? parentOverlayId;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,15 @@ class GapScopeOverlayHost extends StatelessWidget {
 ///
 /// Provides a flexible API for creating overlay regions with dynamic content.
 class GapScopeOverlayBuilder extends StatefulWidget {
+
+  const GapScopeOverlayBuilder({
+    super.key,
+    required this.builder,
+    required this.id,
+    required this.type,
+    this.name,
+    this.initiallyVisible = true,
+  });
   /// Builder function that creates the overlay content
   final Widget Function(BuildContext context) builder;
 
@@ -43,15 +53,6 @@ class GapScopeOverlayBuilder extends StatefulWidget {
 
   /// Whether this overlay is initially visible
   final bool initiallyVisible;
-
-  const GapScopeOverlayBuilder({
-    super.key,
-    required this.builder,
-    required this.id,
-    required this.type,
-    this.name,
-    this.initiallyVisible = true,
-  });
 
   @override
   State<GapScopeOverlayBuilder> createState() =>
@@ -99,6 +100,13 @@ class _GapScopeOverlayBuilderState extends State<GapScopeOverlayBuilder> {
 
 /// Convenience widget for dialog overlays
 class GapScopeDialogRegion extends StatelessWidget {
+
+  const GapScopeDialogRegion({
+    super.key,
+    required this.child,
+    required this.id,
+    this.name,
+  });
   /// Dialog content
   final Widget child;
 
@@ -107,13 +115,6 @@ class GapScopeDialogRegion extends StatelessWidget {
 
   /// Optional dialog name
   final String? name;
-
-  const GapScopeDialogRegion({
-    super.key,
-    required this.child,
-    required this.id,
-    this.name,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +129,13 @@ class GapScopeDialogRegion extends StatelessWidget {
 
 /// Convenience widget for bottom sheet overlays
 class GapScopeBottomSheetRegion extends StatelessWidget {
+
+  const GapScopeBottomSheetRegion({
+    super.key,
+    required this.child,
+    required this.id,
+    this.name,
+  });
   /// Bottom sheet content
   final Widget child;
 
@@ -136,13 +144,6 @@ class GapScopeBottomSheetRegion extends StatelessWidget {
 
   /// Optional bottom sheet name
   final String? name;
-
-  const GapScopeBottomSheetRegion({
-    super.key,
-    required this.child,
-    required this.id,
-    this.name,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +158,13 @@ class GapScopeBottomSheetRegion extends StatelessWidget {
 
 /// Convenience widget for dropdown overlays
 class GapScopeDropdownRegion extends StatelessWidget {
+
+  const GapScopeDropdownRegion({
+    super.key,
+    required this.child,
+    required this.id,
+    this.name,
+  });
   /// Dropdown content
   final Widget child;
 
@@ -165,13 +173,6 @@ class GapScopeDropdownRegion extends StatelessWidget {
 
   /// Optional dropdown name
   final String? name;
-
-  const GapScopeDropdownRegion({
-    super.key,
-    required this.child,
-    required this.id,
-    this.name,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -186,6 +187,13 @@ class GapScopeDropdownRegion extends StatelessWidget {
 
 /// Convenience widget for custom popup overlays
 class GapScopePopupRegion extends StatelessWidget {
+
+  const GapScopePopupRegion({
+    super.key,
+    required this.child,
+    required this.id,
+    this.name,
+  });
   /// Popup content
   final Widget child;
 
@@ -194,13 +202,6 @@ class GapScopePopupRegion extends StatelessWidget {
 
   /// Optional popup name
   final String? name;
-
-  const GapScopePopupRegion({
-    super.key,
-    required this.child,
-    required this.id,
-    this.name,
-  });
 
   @override
   Widget build(BuildContext context) {

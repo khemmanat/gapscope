@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+
 import '../addons/gapscope_addon.dart';
-import 'theme_addon_control.dart';
 import 'device_addon_control.dart';
+import 'theme_addon_control.dart';
 
 /// Panel for addon controls
 class AddonPanel extends StatelessWidget {
-  final List<GapScopeAddon> addons;
-  final double width;
 
   const AddonPanel({
     super.key,
     this.addons = const [],
     this.width = 300,
   });
+  final List<GapScopeAddon> addons;
+  final double width;
 
   @override
   Widget build(BuildContext context) {

@@ -4,10 +4,6 @@ import 'gapscope_addon.dart';
 
 /// Device information model
 class DeviceInfo {
-  final String id;
-  final String name;
-  final TargetPlatform platform;
-  final Size size;
 
   const DeviceInfo({
     required this.id,
@@ -15,6 +11,10 @@ class DeviceInfo {
     required this.platform,
     required this.size,
   });
+  final String id;
+  final String name;
+  final TargetPlatform platform;
+  final Size size;
 
   @override
   bool operator ==(Object other) =>
@@ -29,13 +29,14 @@ class DeviceInfo {
 
 /// Device addon state model
 class DeviceAddonState extends AddonState {
-  final DeviceInfo? selectedDevice;
 
   const DeviceAddonState({
     super.enabled = true,
     this.selectedDevice,
   });
+  final DeviceInfo? selectedDevice;
 
+  @override
   DeviceAddonState copyWith({
     bool? enabled,
     DeviceInfo? selectedDevice,
@@ -60,6 +61,10 @@ class DeviceAddonState extends AddonState {
 
 /// Device addon for previewing different device frames
 class DeviceAddon extends GapScopeAddon<DeviceAddonState> {
+
+  DeviceAddon({
+    this.state = const DeviceAddonState(),
+  });
   @override
   String get id => 'device_addon';
 
@@ -92,10 +97,6 @@ class DeviceAddon extends GapScopeAddon<DeviceAddonState> {
       size: Size(1440, 900),
     ),
   ];
-
-  DeviceAddon({
-    this.state = const DeviceAddonState(),
-  });
 
   @override
   DeviceAddonState updateState(DeviceAddonState state) {

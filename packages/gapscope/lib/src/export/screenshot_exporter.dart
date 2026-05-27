@@ -1,18 +1,13 @@
-import 'dart:typed_data';
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+
 import 'export_config.dart';
 
 /// Result of a screenshot export operation
 class ScreenshotResult {
-  final Uint8List data;
-  final String format;
-  final Size size;
-  final DateTime timestamp;
-  final String filename;
-
   const ScreenshotResult({
     required this.data,
     required this.format,
@@ -20,6 +15,11 @@ class ScreenshotResult {
     required this.timestamp,
     required this.filename,
   });
+  final Uint8List data;
+  final String format;
+  final Size size;
+  final DateTime timestamp;
+  final String filename;
 
   /// Get file size in bytes
   int get fileSize => data.length;
@@ -83,8 +83,7 @@ class ScreenshotExporter {
       throw Exception('Render object is not a RenderRepaintBoundary');
     }
 
-    final boundary = renderObject as RenderRepaintBoundary;
-    final image = await boundary.toImage(
+    final image = await renderObject.toImage(
       pixelRatio: config.pixelRatio,
     );
 
@@ -113,7 +112,8 @@ class ScreenshotExporter {
   /// Generate filename for screenshot
   String _generateFilename(ExportConfig config) {
     final timestamp = DateTime.now();
-    final dateStr = timestamp.toIso8601String().replaceAll(':', '-').split('.')[0];
+    final dateStr =
+        timestamp.toIso8601String().replaceAll(':', '-').split('.')[0];
     return 'gapscope_screenshot_$dateStr.${config.formatExtension}';
   }
 
@@ -146,8 +146,7 @@ class ScreenshotExporter {
         results.add(result);
       } catch (e) {
         // Continue with other captures even if one fails
-        // Continue with other captures even if one fails
-        print('Failed to capture screenshot: $e');
+        debugPrint('Failed to capture screenshot: $e');
       }
     }
 

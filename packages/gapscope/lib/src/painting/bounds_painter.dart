@@ -4,7 +4,9 @@ import '../capture/geometry_snapshot.dart';
 /// Paints widget bounds for runtime inspection
 class BoundsPainter {
   /// Paint bounds for a single snapshot
-  static void paintBounds(Canvas canvas, GeometrySnapshot snapshot, {
+  static void paintBounds(
+    Canvas canvas,
+    GeometrySnapshot snapshot, {
     Color color = const Color(0xFF2196F3),
     double strokeWidth = 1.0,
     bool fill = false,
@@ -19,11 +21,15 @@ class BoundsPainter {
   }
 
   /// Paint bounds for selected snapshot
-  static void paintSelectedBounds(Canvas canvas, GeometrySnapshot snapshot, {
+  static void paintSelectedBounds(
+    Canvas canvas,
+    GeometrySnapshot snapshot, {
     Color color = const Color(0xFF2196F3),
     double strokeWidth = 2.0,
   }) {
-    paintBounds(canvas, snapshot,
+    paintBounds(
+      canvas,
+      snapshot,
       color: color,
       strokeWidth: strokeWidth,
       fill: true,
@@ -31,7 +37,9 @@ class BoundsPainter {
   }
 
   /// Paint bounds for multiple snapshots
-  static void paintMultipleBounds(Canvas canvas, List<GeometrySnapshot> snapshots, {
+  static void paintMultipleBounds(
+    Canvas canvas,
+    List<GeometrySnapshot> snapshots, {
     Color normalColor = const Color(0xFF2196F3),
     Color selectedColor = const Color(0xFF1976D2),
     String? selectedId,
@@ -43,7 +51,9 @@ class BoundsPainter {
       final color = isSelected ? selectedColor : normalColor;
       final strokeWidth = isSelected ? 2.0 : 1.0;
 
-      paintBounds(canvas, snapshot,
+      paintBounds(
+        canvas,
+        snapshot,
         color: color,
         strokeWidth: strokeWidth,
         fill: isSelected,
@@ -52,7 +62,9 @@ class BoundsPainter {
   }
 
   /// Paint bounds with depth-based opacity
-  static void paintBoundsWithDepth(Canvas canvas, List<GeometrySnapshot> snapshots, {
+  static void paintBoundsWithDepth(
+    Canvas canvas,
+    List<GeometrySnapshot> snapshots, {
     Color baseColor = const Color(0xFF2196F3),
     int maxDepth = 10,
   }) {
@@ -61,14 +73,16 @@ class BoundsPainter {
 
       // Calculate opacity based on depth (deeper = more transparent)
       final depthFactor = 1.0 - (snapshot.depth / maxDepth).clamp(0.0, 1.0);
-      final color = baseColor.withValues(alpha: baseColor.alpha * depthFactor);
+      final color = baseColor.withValues(alpha: baseColor.a * depthFactor);
 
       paintBounds(canvas, snapshot, color: color);
     }
   }
 
   /// Paint widget type label for snapshot
-  static void paintWidgetLabel(Canvas canvas, GeometrySnapshot snapshot, {
+  static void paintWidgetLabel(
+    Canvas canvas,
+    GeometrySnapshot snapshot, {
     Color backgroundColor = const Color(0xFF2196F3),
     Color textColor = const Color(0xFFFFFFFF),
     double fontSize = 12.0,
@@ -122,7 +136,9 @@ class BoundsPainter {
   }
 
   /// Paint corner handles for selected widget
-  static void paintCornerHandles(Canvas canvas, GeometrySnapshot snapshot, {
+  static void paintCornerHandles(
+    Canvas canvas,
+    GeometrySnapshot snapshot, {
     Color color = const Color(0xFF2196F3),
     double handleSize = 6.0,
   }) {
@@ -177,13 +193,16 @@ class BoundsPainter {
   }
 
   /// Paint size information for widget
-  static void paintSizeInfo(Canvas canvas, GeometrySnapshot snapshot, {
+  static void paintSizeInfo(
+    Canvas canvas,
+    GeometrySnapshot snapshot, {
     Color backgroundColor = const Color(0xAA000000),
     Color textColor = const Color(0xFFFFFFFF),
     double fontSize = 11.0,
   }) {
     final bounds = snapshot.bounds;
-    final sizeText = '${snapshot.size.width.toInt()}×${snapshot.size.height.toInt()}';
+    final sizeText =
+        '${snapshot.size.width.toInt()}×${snapshot.size.height.toInt()}';
 
     final textPainter = TextPainter(
       text: TextSpan(

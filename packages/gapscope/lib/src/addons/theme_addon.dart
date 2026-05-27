@@ -4,9 +4,6 @@ import 'gapscope_addon.dart';
 
 /// Theme addon state model
 class ThemeAddonState extends AddonState {
-  final ThemeMode themeMode;
-  final ThemeData? lightTheme;
-  final ThemeData? darkTheme;
 
   const ThemeAddonState({
     super.enabled = true,
@@ -14,7 +11,11 @@ class ThemeAddonState extends AddonState {
     this.lightTheme,
     this.darkTheme,
   });
+  final ThemeMode themeMode;
+  final ThemeData? lightTheme;
+  final ThemeData? darkTheme;
 
+  @override
   ThemeAddonState copyWith({
     bool? enabled,
     ThemeMode? themeMode,
@@ -43,6 +44,10 @@ class ThemeAddonState extends AddonState {
 
 /// Theme addon for switching between light/dark themes
 class ThemeAddon extends GapScopeAddon<ThemeAddonState> {
+
+  ThemeAddon({
+    this.state = const ThemeAddonState(),
+  });
   @override
   String get id => 'theme_addon';
 
@@ -64,10 +69,6 @@ class ThemeAddon extends GapScopeAddon<ThemeAddonState> {
     useMaterial3: true,
     brightness: Brightness.dark,
   );
-
-  ThemeAddon({
-    this.state = const ThemeAddonState(),
-  });
 
   @override
   ThemeAddonState updateState(ThemeAddonState state) {

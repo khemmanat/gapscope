@@ -9,6 +9,15 @@ import 'overlay_type.dart';
 /// inspection and visualization of custom overlays like dialogs,
 /// bottom sheets, dropdowns, etc.
 class GapScopeOverlayRegion extends StatefulWidget {
+
+  const GapScopeOverlayRegion({
+    super.key,
+    required this.child,
+    required this.id,
+    required this.type,
+    this.name,
+    this.isVisible = true,
+  });
   /// The overlay widget to inspect
   final Widget child;
 
@@ -23,15 +32,6 @@ class GapScopeOverlayRegion extends StatefulWidget {
 
   /// Whether this overlay is currently visible
   final bool isVisible;
-
-  const GapScopeOverlayRegion({
-    super.key,
-    required this.child,
-    required this.id,
-    required this.type,
-    this.name,
-    this.isVisible = true,
-  });
 
   @override
   State<GapScopeOverlayRegion> createState() => _GapScopeOverlayRegionState();

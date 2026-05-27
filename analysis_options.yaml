@@ -4,6 +4,7 @@ analyzer:
   exclude:
     - '**/*.g.dart'
     - '**/*.freezed.dart'
+    - 'docs/agent_system/**'
   strong-mode:
     implicit-casts: false
     implicit-dynamic: false
@@ -11,7 +12,9 @@ analyzer:
 linter:
   rules:
     # Public API
-    public_member_api_docs: true
+    # Keep disabled while the MVP API is still moving quickly. Re-enable before
+    # publishing stable package APIs.
+    public_member_api_docs: false
     # prefer_public_declarations: true  # Not available in current Flutter version
 
     # Style

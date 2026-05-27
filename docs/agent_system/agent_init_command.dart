@@ -1,6 +1,7 @@
-import 'document_reader_agent.dart';
-import 'ai_prompt_processor.dart';
 import 'dart:io';
+
+import 'ai_prompt_processor.dart';
+import 'document_reader_agent.dart';
 
 class AgentInitCommand {
   static Future<void> initialize() async {
@@ -106,7 +107,7 @@ class AgentInitCommand {
 
       print('📝 Enhanced prompt generated:');
       print('   Length: ${enhancedPrompt.length} characters');
-      print('   Context lines: ${enhancedPrompt.split("\\n").length}');
+      print('   Context lines: ${enhancedPrompt.split(r"\n").length}');
       print('');
 
       print('🔍 Relevant context found:');
@@ -163,7 +164,7 @@ class AgentInitCommand {
 
   static String _getPreview(String content, int maxLength) {
     if (content.length <= maxLength) return content;
-    return content.substring(0, maxLength) + '...';
+    return '${content.substring(0, maxLength)}...';
   }
 
   static void showArchitecture() {

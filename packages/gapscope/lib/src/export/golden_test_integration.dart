@@ -5,6 +5,19 @@ import 'screenshot_exporter.dart';
 
 /// Golden test configuration for GapScope
 class GoldenTestConfig {
+
+  GoldenTestConfig({
+    required this.testName,
+    required this.widget,
+    this.includeInspector = false,
+    this.goldenFilePath,
+    ExportConfig? exportConfig,
+  }) : exportConfig = exportConfig ?? const ExportConfig(
+    format: ScreenshotFormat.png,
+    quality: 1.0,
+    includeInspector: true,
+    pixelRatio: 2.0,
+  );
   /// Golden test name
   final String testName;
 
@@ -19,23 +32,19 @@ class GoldenTestConfig {
 
   /// Export configuration
   final ExportConfig exportConfig;
-
-  GoldenTestConfig({
-    required this.testName,
-    required this.widget,
-    this.includeInspector = false,
-    this.goldenFilePath,
-    ExportConfig? exportConfig,
-  }) : exportConfig = exportConfig ?? const ExportConfig(
-    format: ScreenshotFormat.png,
-    quality: 1.0,
-    includeInspector: true,
-    pixelRatio: 2.0,
-  );
 }
 
 /// Golden test result with comparison data
 class GoldenTestResult {
+
+  const GoldenTestResult({
+    required this.testName,
+    required this.passed,
+    this.pixelDiff,
+    this.errorMessage,
+    this.screenshot,
+    required this.timestamp,
+  });
   /// Test name
   final String testName;
 
@@ -53,15 +62,6 @@ class GoldenTestResult {
 
   /// Test timestamp
   final DateTime timestamp;
-
-  const GoldenTestResult({
-    required this.testName,
-    required this.passed,
-    this.pixelDiff,
-    this.errorMessage,
-    this.screenshot,
-    required this.timestamp,
-  });
 
   /// Get result status message
   String get statusMessage {

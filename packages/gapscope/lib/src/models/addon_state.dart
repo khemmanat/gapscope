@@ -2,10 +2,10 @@
 ///
 /// Provides a common interface for addon state management
 class AddonState {
-  /// Whether this addon is currently enabled
-  final bool enabled;
 
   const AddonState({this.enabled = true});
+  /// Whether this addon is currently enabled
+  final bool enabled;
 
   AddonState copyWith({bool? enabled}) {
     return AddonState(enabled: enabled ?? this.enabled);

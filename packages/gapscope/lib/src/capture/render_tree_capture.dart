@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'package:flutter/scheduler.dart';
+
 import 'package:flutter/widgets.dart';
+
 import 'geometry_snapshot.dart';
 
 /// Captures render tree geometry snapshots safely and efficiently
@@ -8,6 +9,9 @@ import 'geometry_snapshot.dart';
 /// Throttles capture operations to maintain performance while providing
 /// up-to-date geometry information for runtime inspection.
 class RenderTreeCapture {
+  RenderTreeCapture({
+    this.throttleDuration = _defaultThrottleDuration,
+  });
   static const _defaultThrottleDuration = Duration(milliseconds: 33); // ~30fps
 
   final Duration throttleDuration;
@@ -16,10 +20,6 @@ class RenderTreeCapture {
   GeometrySnapshot? _lastSnapshot;
   Timer? _throttleTimer;
   bool _captureRequested = false;
-
-  RenderTreeCapture({
-    this.throttleDuration = _defaultThrottleDuration,
-  });
 
   /// Get the global key for capturing
   GlobalKey get captureKey => _captureKey;
@@ -45,7 +45,8 @@ class RenderTreeCapture {
 
   /// Perform the actual capture operation
   void _performCapture() {
-    final RenderObject? renderObject = _captureKey.currentContext?.findRenderObject();
+    final RenderObject? renderObject =
+        _captureKey.currentContext?.findRenderObject();
     if (renderObject == null) return;
 
     _lastSnapshot = GeometrySnapshot.fromRenderObject(
@@ -101,7 +102,10 @@ class RenderTreeCapture {
   }
 
   /// Find snapshot containing a point
-  GeometrySnapshot? findSnapshotAtPoint(Offset point, List<GeometrySnapshot> snapshots) {
+  GeometrySnapshot? findSnapshotAtPoint(
+    Offset point,
+    List<GeometrySnapshot> snapshots,
+  ) {
     // Search from deepest to shallowest
     final sortedSnapshots = List<GeometrySnapshot>.from(snapshots)
       ..sort((a, b) => b.depth.compareTo(a.depth));
@@ -115,7 +119,10 @@ class RenderTreeCapture {
   }
 
   /// Find all snapshots within a bounds
-  List<GeometrySnapshot> findSnapshotsInBounds(Rect bounds, List<GeometrySnapshot> snapshots) {
+  List<GeometrySnapshot> findSnapshotsInBounds(
+    Rect bounds,
+    List<GeometrySnapshot> snapshots,
+  ) {
     return snapshots.where((snapshot) {
       return snapshot.bounds.overlaps(bounds) && snapshot.visible;
     }).toList();

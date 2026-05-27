@@ -7,17 +7,17 @@ import '../overlay/overlay_type.dart';
 /// Renders overlay bounds with type-specific styling, including
 /// dashed borders, semi-transparent fills, and overlay type labels.
 class OverlayPainter extends CustomPainter {
-  /// List of overlays to render
-  final List<OverlayInfo> overlays;
-
-  /// Currently selected overlay
-  final OverlayInfo? selectedOverlay;
 
   /// Create overlay painter
   const OverlayPainter({
     required this.overlays,
     this.selectedOverlay,
   });
+  /// List of overlays to render
+  final List<OverlayInfo> overlays;
+
+  /// Currently selected overlay
+  final OverlayInfo? selectedOverlay;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -60,8 +60,8 @@ class OverlayPainter extends CustomPainter {
 
   /// Draw dashed border around overlay
   void _drawDashedBorder(Canvas canvas, Rect bounds, Color color, double strokeWidth) {
-    final dashWidth = 8.0;
-    final dashSpace = 4.0;
+    const dashWidth = 8.0;
+    const dashSpace = 4.0;
     final path = Path()..addRect(bounds);
 
     final dashPaint = Paint()
@@ -96,7 +96,7 @@ class OverlayPainter extends CustomPainter {
   void _drawOverlayLabel(Canvas canvas, OverlayInfo overlay, Color typeColor) {
     const labelPadding = 8.0;
     final labelText = '${overlay.type.displayName} - ${overlay.id}';
-    final textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
       fontSize: 12,
       fontWeight: FontWeight.bold,

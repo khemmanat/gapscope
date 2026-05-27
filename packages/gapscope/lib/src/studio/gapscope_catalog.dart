@@ -3,6 +3,8 @@ import 'gapscope_component.dart';
 
 /// Catalog for organizing and accessing components and stories
 class GapScopeCatalog {
+
+  const GapScopeCatalog({this.components = const []});
   /// All registered components
   final List<GapScopeComponent> components;
 
@@ -12,8 +14,6 @@ class GapScopeCatalog {
         .expand((component) => component.stories)
         .toList();
   }
-
-  const GapScopeCatalog({this.components = const []});
 
   /// Find component by ID
   GapScopeComponent? findComponent(String id) {

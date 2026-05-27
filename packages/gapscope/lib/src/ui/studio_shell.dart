@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
+
 import '../addons/gapscope_addon.dart';
+import '../inspector/gapscope_controller.dart';
 import '../models/story_data.dart';
 import '../studio/gapscope_catalog.dart';
-import '../inspector/gapscope_controller.dart';
+import 'addon_panel.dart';
 import 'component_sidebar.dart';
 import 'story_canvas.dart';
-import 'addon_panel.dart';
 
 /// Main studio shell for GapScope Studio
 ///
 /// Provides the responsive layout with sidebar, canvas, and addon panel.
 class StudioShell extends StatefulWidget {
-  final String title;
-  final GapScopeCatalog catalog;
-  final List<GapScopeAddon> addons;
-  final StoryData? initialStory;
-
   const StudioShell({
     super.key,
     required this.title,
@@ -23,6 +19,10 @@ class StudioShell extends StatefulWidget {
     this.addons = const [],
     this.initialStory,
   });
+  final String title;
+  final GapScopeCatalog catalog;
+  final List<GapScopeAddon> addons;
+  final StoryData? initialStory;
 
   @override
   State<StudioShell> createState() => _StudioShellState();
@@ -62,9 +62,9 @@ class _StudioShellState extends State<StudioShell> {
   void _toggleInspector() {
     setState(() {
       if (_inspectorController.mode == GapScopeMode.off) {
-        _inspectorController.setMode(GapScopeMode.bounds);
+        _inspectorController.mode = GapScopeMode.bounds;
       } else {
-        _inspectorController.setMode(GapScopeMode.off);
+        _inspectorController.mode = GapScopeMode.off;
       }
     });
   }
@@ -87,7 +87,8 @@ class _StudioShellState extends State<StudioShell> {
                 ? StoryCanvas(
                     story: _selectedStory!,
                     key: ValueKey(_selectedStory!.id),
-                    inspectorEnabled: _inspectorController.mode != GapScopeMode.off,
+                    inspectorEnabled:
+                        _inspectorController.mode != GapScopeMode.off,
                     inspectorController: _inspectorController,
                   )
                 : _buildEmptyState(),
@@ -113,9 +114,11 @@ class _StudioShellState extends State<StudioShell> {
           tooltip: 'Toggle Sidebar',
         ),
         IconButton(
-          icon: Icon(_inspectorController.mode != GapScopeMode.off
-              ? Icons.brightness_5
-              : Icons.brightness_5_outlined),
+          icon: Icon(
+            _inspectorController.mode != GapScopeMode.off
+                ? Icons.brightness_5
+                : Icons.brightness_5_outlined,
+          ),
           onPressed: _toggleInspector,
           tooltip: 'Toggle Inspector',
         ),

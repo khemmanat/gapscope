@@ -1,6 +1,8 @@
 import 'dart:io';
 
 class DocumentReaderAgent {
+
+  DocumentReaderAgent._internal();
   static String get docsPath {
     final currentDir = Directory.current.path;
     // Check if we're in the agent_system directory or workspace root
@@ -12,15 +14,13 @@ class DocumentReaderAgent {
   }
   static DocumentReaderAgent? _instance;
 
-  Map<String, dynamic> _documentCache = {};
-  List<String> _supportedExtensions = ['.md', '.txt', '.json'];
+  final Map<String, dynamic> _documentCache = {};
+  final List<String> _supportedExtensions = ['.md', '.txt', '.json'];
 
   static DocumentReaderAgent get instance {
     _instance ??= DocumentReaderAgent._internal();
     return _instance!;
   }
-
-  DocumentReaderAgent._internal();
 
   Future<void> loadDocuments() async {
     final docsDir = Directory(docsPath);
@@ -43,12 +43,12 @@ class DocumentReaderAgent {
   }
 
   Future<void> _loadFile(File file) async {
-    final extension = '.' + file.path.split('.').last;
+    final extension = '.${file.path.split('.').last}';
     if (!_supportedExtensions.contains(extension)) return;
 
     try {
       final content = await file.readAsString();
-      final relativePath = file.path.replaceAll(Directory.current.path + '/', '');
+      final relativePath = file.path.replaceAll('${Directory.current.path}/', '');
 
       _documentCache[relativePath] = {
         'path': relativePath,

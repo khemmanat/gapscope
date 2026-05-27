@@ -4,6 +4,14 @@ import 'package:flutter/widgets.dart';
 ///
 /// Defines the metadata and content for a single story in the catalog.
 class StoryData {
+
+  const StoryData({
+    required this.id,
+    required this.name,
+    this.description,
+    required this.builder,
+    this.category,
+  });
   /// Unique identifier for this story
   final String id;
 
@@ -18,14 +26,6 @@ class StoryData {
 
   /// Optional category for grouping
   final String? category;
-
-  const StoryData({
-    required this.id,
-    required this.name,
-    this.description,
-    required this.builder,
-    this.category,
-  });
 
   StoryData copyWith({
     String? id,

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import '../models/story_data.dart';
-import '../inspector/gapscope_inspector.dart';
+
 import '../inspector/gapscope_controller.dart';
+import '../inspector/gapscope_inspector.dart';
+import '../models/story_data.dart';
 
 /// Canvas for rendering story previews with inspector support
 class StoryCanvas extends StatelessWidget {
-  final StoryData story;
-  final bool inspectorEnabled;
-  final GapScopeController? inspectorController;
 
   const StoryCanvas({
     super.key,
@@ -15,6 +13,9 @@ class StoryCanvas extends StatelessWidget {
     this.inspectorEnabled = false,
     this.inspectorController,
   });
+  final StoryData story;
+  final bool inspectorEnabled;
+  final GapScopeController? inspectorController;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class StoryCanvas extends StatelessWidget {
           )
         : storyWidget;
 
-    return Container(
+    return ColoredBox(
       color: Theme.of(context).colorScheme.surface,
       child: Center(
         child: Padding(

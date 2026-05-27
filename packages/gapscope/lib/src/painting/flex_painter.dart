@@ -6,17 +6,17 @@ import '../measurement/flex_gap_detector.dart';
 /// Renders flex layouts with axis indicators, gap highlights,
 /// and issue warnings for comprehensive layout analysis.
 class FlexPainter extends CustomPainter {
-  /// Flex layouts to visualize
-  final List<FlexGap> flexLayouts;
-
-  /// Currently selected flex layout
-  final FlexGap? selectedFlex;
 
   /// Create flex painter
   const FlexPainter({
     required this.flexLayouts,
     this.selectedFlex,
   });
+  /// Flex layouts to visualize
+  final List<FlexGap> flexLayouts;
+
+  /// Currently selected flex layout
+  final FlexGap? selectedFlex;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -119,7 +119,7 @@ class FlexPainter extends CustomPainter {
   void _drawGapLabel(Canvas canvas, WidgetGap gap) {
     const labelPadding = 4.0;
     final labelText = '${gap.value.toStringAsFixed(1)}px';
-    final textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
       fontSize: 10,
       fontWeight: FontWeight.bold,
@@ -218,7 +218,7 @@ class FlexPainter extends CustomPainter {
 
     // Draw arrowhead
     final direction = (end - start).normalize();
-    final arrowSize = 8.0;
+    const arrowSize = 8.0;
 
     final arrowPoint1 = end - direction * arrowSize +
       Offset(-direction.dy * 0.5, direction.dx * 0.5) * arrowSize;
@@ -236,7 +236,7 @@ class FlexPainter extends CustomPainter {
 
   /// Draw simple icon
   void _drawSimpleIcon(Canvas canvas, Offset position, String icon, Color color) {
-    final textStyle = TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
       fontSize: 12,
       fontWeight: FontWeight.bold,

@@ -55,7 +55,7 @@ void main() {
 
   group('QA Report Generator Tests', () {
     test('QAIssue converts to JSON correctly', () {
-      final issue = QAIssue(
+      const issue = QAIssue(
         id: 'test_issue',
         severity: IssueSeverity.error,
         category: 'Test Category',
@@ -136,13 +136,13 @@ void main() {
         timestamp: DateTime.now(),
         screenshots: [],
         issues: [
-          QAIssue(
+          const QAIssue(
             id: 'critical1',
             severity: IssueSeverity.critical,
             category: 'Critical',
             description: 'Critical issue',
           ),
-          QAIssue(
+          const QAIssue(
             id: 'warning1',
             severity: IssueSeverity.warning,
             category: 'Warning',
@@ -202,7 +202,7 @@ void main() {
 
   group('CI Automation Tests', () {
     test('CiConfig has correct default values', () {
-      final config = const CiConfig(
+      const config = CiConfig(
         projectName: 'Test Project',
       );
 
@@ -215,7 +215,7 @@ void main() {
     });
 
     test('CiResult handles success case correctly', () {
-      final result = const CiResult(
+      const result = CiResult(
         success: true,
         exitCode: CiExitCode.success,
         executionTimeMs: 1500,
@@ -229,7 +229,7 @@ void main() {
     });
 
     test('CiResult handles error case correctly', () {
-      final result = const CiResult(
+      const result = CiResult(
         success: false,
         exitCode: CiExitCode.error,
         executionTimeMs: 500,
