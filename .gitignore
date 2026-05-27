@@ -1,0 +1,94 @@
+# macOS
+.DS_Store
+
+# Editor and IDE state
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Local agent/tooling state
+.claude/
+.codex/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+.fvm/flutter_sdk
+
+# Dart and Flutter
+.dart_tool/
+.packages
+.pub/
+.pub-cache/
+.flutter-plugins
+.flutter-plugins-dependencies
+**/doc/api/
+**/coverage/
+**/build/
+**/ios/Flutter/.last_build_id
+
+# Flutter generated symbol and obfuscation files
+app.*.symbols
+app.*.map.json
+
+# Android generated files
+**/android/.gradle/
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+**/android/.cxx/
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+
+# Android signing material
+**/android/key.properties
+**/*.keystore
+**/*.jks
+
+# iOS and macOS generated files
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/ephemeral/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+**/macos/Pods/
+**/macos/.symlinks/
+**/macos/Flutter/ephemeral/
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+**/macos/Flutter/GeneratedPluginRegistrant.*
+
+# Xcode user state
+**/DerivedData/
+**/xcuserdata/
+*.mode1v3
+*.mode2v3
+*.moved-aside
+*.pbxuser
+*.perspectivev3
+!default.mode1v3
+!default.mode2v3
+!default.pbxuser
+!default.perspectivev3
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+.history/
+
+# Test and report artifacts
+test-results/
+goldens/failures/

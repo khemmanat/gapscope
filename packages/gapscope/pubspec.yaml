@@ -1,0 +1,40 @@
+name: gapscope
+description: >-
+  Flutter component workbench and runtime QA inspector with advanced layout debugging,
+  screenshot export, and CI/CD integration. Comprehensive design system testing with
+  bounds inspection, spacing analysis, flex visualization, and Material Design compliance checking.
+version: 1.0.0
+homepage: https://github.com/yourusername/gapscope
+repository: https://github.com/yourusername/gapscope
+issue_tracker: https://github.com/yourusername/gapscope/issues
+documentation: https://github.com/yourusername/gapscope/blob/main/packages/gapscope/README.md
+topics:
+  - flutter
+  - design-system
+  - testing
+  - qa
+  - component-library
+  - inspector
+  - layout-debugging
+  - material-design
+  - ui-testing
+  - screenshot
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.10.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  collection: ^1.18.0
+  meta: ^1.9.1
+
+dev_dependencies:
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  # No assets needed yet for Phase 1

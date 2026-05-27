@@ -1,0 +1,25 @@
+name: gapscope
+
+repository: https://github.com/your-org/gapscope
+# Remove or set to null if the package doesn't need to be published
+publishTo: none
+
+command:
+  bootstrap:
+    # Disable generation of `use ключевое слово` files
+    usePubspecOverrides: true
+
+    # Run `pub get` in all packages
+    runPubGetInParallel: true
+
+    # If you're using melos to manage your Flutter version, set this to true
+    # Otherwise, leave it as false
+    verifyGitTags: false
+
+  environment:
+    sdk: '>=3.0.0 <4.0.0'
+    flutter: '>=3.10.0'
+
+packages:
+  - packages/**
+  - apps/**
