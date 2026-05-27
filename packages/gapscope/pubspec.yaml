@@ -4,10 +4,6 @@ description: >-
   screenshot export, and CI/CD integration. Comprehensive design system testing with
   bounds inspection, spacing analysis, flex visualization, and Material Design compliance checking.
 version: 1.0.0
-homepage: https://github.com/yourusername/gapscope
-repository: https://github.com/yourusername/gapscope
-issue_tracker: https://github.com/yourusername/gapscope/issues
-documentation: https://github.com/yourusername/gapscope/blob/main/packages/gapscope/README.md
 topics:
   - flutter
   - design-system

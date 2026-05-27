@@ -1,17 +1,14 @@
-# gapscope_studio_app
+# GapScope Studio App
 
-A new Flutter project.
+This Flutter app is the local development and preview shell for the reusable `gapscope` package.
 
-## Getting Started
+Use it to exercise component stories, addons, and inspection behavior while developing the package.
 
-This project is a starting point for a Flutter application.
+## Run
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+flutter pub get
+flutter run
+```
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The app depends on the local package at `../../packages/gapscope`.

@@ -1,6 +1,4 @@
 name: gapscope
-
-repository: https://github.com/your-org/gapscope
 # Remove or set to null if the package doesn't need to be published
 publishTo: none
 
