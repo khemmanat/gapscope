@@ -3,12 +3,13 @@ import '../addons/theme_addon.dart';
 
 /// Control widget for theme addon
 class ThemeAddonControl extends StatefulWidget {
-
   const ThemeAddonControl({
     super.key,
     required this.addon,
+    this.onChanged,
   });
   final ThemeAddon addon;
+  final ValueChanged<ThemeAddon>? onChanged;
 
   @override
   State<ThemeAddonControl> createState() => _ThemeAddonControlState();
@@ -94,8 +95,7 @@ class _ThemeAddonControlState extends State<ThemeAddonControl> {
   }
 
   void _onThemeModeChanged(ThemeMode mode) {
-    // TODO: Implement theme mode change
-    // This will require updating the app's theme mode
-    // and notifying the addon of the change
+    final state = widget.addon.state.copyWith(themeMode: mode);
+    widget.onChanged?.call(widget.addon.copyWith(state));
   }
 }

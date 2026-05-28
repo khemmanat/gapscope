@@ -3,12 +3,13 @@ import '../addons/device_addon.dart';
 
 /// Control widget for device addon
 class DeviceAddonControl extends StatefulWidget {
-
   const DeviceAddonControl({
     super.key,
     required this.addon,
+    this.onChanged,
   });
   final DeviceAddon addon;
+  final ValueChanged<DeviceAddon>? onChanged;
 
   @override
   State<DeviceAddonControl> createState() => _DeviceAddonControlState();
@@ -66,38 +67,56 @@ class _DeviceAddonControlState extends State<DeviceAddonControl> {
           style: Theme.of(context).textTheme.labelLarge,
         ),
         const SizedBox(height: 8),
-        DropdownButton<DeviceInfo>(
+        DropdownButton<DeviceInfo?>(
           isExpanded: true,
           value: selectedDevice,
-          hint: const Text('Select a device'),
-          items: DeviceAddon.defaultDevices.map((device) {
-            return DropdownMenuItem(
-              value: device,
+          hint: const Text('Responsive canvas'),
+          items: [
+            DropdownMenuItem<DeviceInfo?>(
+              value: null,
               child: Row(
                 children: [
                   Icon(
-                    _getDeviceIcon(device.platform),
+                    Icons.web_asset,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(device.name),
-                  ),
+                  const Expanded(child: Text('Responsive canvas')),
                   Text(
-                    '${device.size.width.toInt()}×${device.size.height.toInt()}',
+                    'Default',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                   ),
                 ],
               ),
-            );
-          }).toList(),
-          onChanged: (DeviceInfo? device) {
-            if (device != null) {
-              _onDeviceChanged(device);
-            }
-          },
+            ),
+            ...DeviceAddon.defaultDevices.map((device) {
+              return DropdownMenuItem<DeviceInfo?>(
+                value: device,
+                child: Row(
+                  children: [
+                    Icon(
+                      _getDeviceIcon(device.platform),
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(device.name),
+                    ),
+                    Text(
+                      '${device.size.width.toInt()}x${device.size.height.toInt()}',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ],
+          onChanged: _onDeviceChanged,
         ),
       ],
     );
@@ -120,9 +139,11 @@ class _DeviceAddonControlState extends State<DeviceAddonControl> {
     }
   }
 
-  void _onDeviceChanged(DeviceInfo device) {
-    // TODO: Implement device change
-    // This will require updating the addon state
-    // and applying device frame to canvas
+  void _onDeviceChanged(DeviceInfo? device) {
+    final state = widget.addon.state.copyWith(
+      selectedDevice: device,
+      clearSelectedDevice: device == null,
+    );
+    widget.onChanged?.call(widget.addon.copyWith(state));
   }
 }

@@ -4,7 +4,6 @@ import 'gapscope_addon.dart';
 
 /// Device information model
 class DeviceInfo {
-
   const DeviceInfo({
     required this.id,
     required this.name,
@@ -19,9 +18,7 @@ class DeviceInfo {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DeviceInfo &&
-          runtimeType == other.runtimeType &&
-          id == other.id;
+      other is DeviceInfo && runtimeType == other.runtimeType && id == other.id;
 
   @override
   int get hashCode => id.hashCode;
@@ -29,7 +26,6 @@ class DeviceInfo {
 
 /// Device addon state model
 class DeviceAddonState extends AddonState {
-
   const DeviceAddonState({
     super.enabled = true,
     this.selectedDevice,
@@ -40,10 +36,12 @@ class DeviceAddonState extends AddonState {
   DeviceAddonState copyWith({
     bool? enabled,
     DeviceInfo? selectedDevice,
+    bool clearSelectedDevice = false,
   }) {
     return DeviceAddonState(
       enabled: enabled ?? this.enabled,
-      selectedDevice: selectedDevice ?? this.selectedDevice,
+      selectedDevice:
+          clearSelectedDevice ? null : selectedDevice ?? this.selectedDevice,
     );
   }
 
@@ -61,7 +59,6 @@ class DeviceAddonState extends AddonState {
 
 /// Device addon for previewing different device frames
 class DeviceAddon extends GapScopeAddon<DeviceAddonState> {
-
   DeviceAddon({
     this.state = const DeviceAddonState(),
   });
@@ -79,10 +76,34 @@ class DeviceAddon extends GapScopeAddon<DeviceAddonState> {
 
   static const List<DeviceInfo> defaultDevices = [
     DeviceInfo(
+      id: 'iphone_se',
+      name: 'iPhone SE',
+      platform: TargetPlatform.iOS,
+      size: Size(375, 667),
+    ),
+    DeviceInfo(
       id: 'iphone_14',
       name: 'iPhone 14',
       platform: TargetPlatform.iOS,
       size: Size(390, 844),
+    ),
+    DeviceInfo(
+      id: 'iphone_14_pro_max',
+      name: 'iPhone 14 Pro Max',
+      platform: TargetPlatform.iOS,
+      size: Size(430, 932),
+    ),
+    DeviceInfo(
+      id: 'ipad_mini',
+      name: 'iPad Mini',
+      platform: TargetPlatform.iOS,
+      size: Size(744, 1133),
+    ),
+    DeviceInfo(
+      id: 'ipad_pro_11',
+      name: 'iPad Pro 11"',
+      platform: TargetPlatform.iOS,
+      size: Size(834, 1194),
     ),
     DeviceInfo(
       id: 'pixel_7',
@@ -91,10 +112,34 @@ class DeviceAddon extends GapScopeAddon<DeviceAddonState> {
       size: Size(412, 915),
     ),
     DeviceInfo(
+      id: 'pixel_fold',
+      name: 'Pixel Fold',
+      platform: TargetPlatform.android,
+      size: Size(673, 841),
+    ),
+    DeviceInfo(
+      id: 'galaxy_s23',
+      name: 'Galaxy S23',
+      platform: TargetPlatform.android,
+      size: Size(360, 780),
+    ),
+    DeviceInfo(
+      id: 'galaxy_tab_s8',
+      name: 'Galaxy Tab S8',
+      platform: TargetPlatform.android,
+      size: Size(800, 1280),
+    ),
+    DeviceInfo(
       id: 'macbook',
       name: 'MacBook Pro',
       platform: TargetPlatform.macOS,
       size: Size(1440, 900),
+    ),
+    DeviceInfo(
+      id: 'desktop_1080p',
+      name: 'Desktop 1080p',
+      platform: TargetPlatform.windows,
+      size: Size(1920, 1080),
     ),
   ];
 

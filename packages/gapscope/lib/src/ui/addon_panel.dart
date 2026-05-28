@@ -6,14 +6,15 @@ import 'theme_addon_control.dart';
 
 /// Panel for addon controls
 class AddonPanel extends StatelessWidget {
-
   const AddonPanel({
     super.key,
     this.addons = const [],
     this.width = 300,
+    this.onAddonChanged,
   });
   final List<GapScopeAddon> addons;
   final double width;
+  final ValueChanged<GapScopeAddon>? onAddonChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +87,14 @@ class AddonPanel extends StatelessWidget {
       case 'theme_addon':
         return ThemeAddonControl(
           addon: addon as dynamic, // Type cast for specific addon types
+          onChanged:
+              onAddonChanged == null ? null : (addon) => onAddonChanged!(addon),
         );
       case 'device_addon':
         return DeviceAddonControl(
           addon: addon as dynamic, // Type cast for specific addon types
+          onChanged:
+              onAddonChanged == null ? null : (addon) => onAddonChanged!(addon),
         );
       default:
         return _buildDefaultAddonControl(context, addon);

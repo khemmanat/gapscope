@@ -160,11 +160,41 @@ class _GapScopeInspectorState extends State<GapScopeInspector> {
     }
   }
 
+  Offset _captureLocalOffset() {
+    final renderObject = _capture.captureKey.currentContext?.findRenderObject();
+    if (renderObject is RenderBox) {
+      return renderObject.localToGlobal(Offset.zero);
+    }
+    return Offset.zero;
+  }
+
+  List<GeometrySnapshot> _localizeSnapshots(
+    List<GeometrySnapshot> snapshots,
+    Offset offset,
+  ) {
+    if (offset == Offset.zero) return snapshots;
+    return snapshots
+        .map((snapshot) => _localizeSnapshot(snapshot, offset))
+        .toList();
+  }
+
+  GeometrySnapshot _localizeSnapshot(GeometrySnapshot snapshot, Offset offset) {
+    return snapshot.copyWith(bounds: snapshot.bounds.shift(-offset));
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_controller.mode == GapScopeMode.off) {
       return widget.child;
     }
+
+    final captureOffset = _captureLocalOffset();
+    final localSnapshots = _localizeSnapshots(_currentSnapshots, captureOffset);
+    final localSelectedSnapshot = _selectedSnapshot == null
+        ? null
+        : _localizeSnapshot(_selectedSnapshot!, captureOffset);
+    final localMeasurementEngine =
+        MeasurementEngine().updateSnapshots(localSnapshots);
 
     return Stack(
       children: [
@@ -173,19 +203,24 @@ class _GapScopeInspectorState extends State<GapScopeInspector> {
           onPointerDown: _handlePointerEvent,
           onPointerMove: _handlePointerEvent,
           behavior: HitTestBehavior.translucent,
-          child: widget.child,
+          child: KeyedSubtree(
+            key: _capture.captureKey,
+            child: widget.child,
+          ),
         ),
 
         // Inspector overlay
         Positioned.fill(
-          child: CustomPaint(
-            painter: InspectorPainter(
-              snapshots: _currentSnapshots,
-              selectedSnapshot: _selectedSnapshot,
-              mode: _controller.mode,
-              measurementEngine: _measurementEngine,
-              overlays: _currentOverlays,
-              selectedOverlay: _selectedOverlay,
+          child: IgnorePointer(
+            child: CustomPaint(
+              painter: InspectorPainter(
+                snapshots: localSnapshots,
+                selectedSnapshot: localSelectedSnapshot,
+                mode: _controller.mode,
+                measurementEngine: localMeasurementEngine,
+                overlays: _currentOverlays,
+                selectedOverlay: _selectedOverlay,
+              ),
             ),
           ),
         ),
